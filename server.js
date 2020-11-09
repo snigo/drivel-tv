@@ -1,15 +1,20 @@
 
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT;
+const path = require('path');
 
 //Replaces process.env variables with variables in .env file (comment out if deployed)
-require('dotenv').config();
+//require('dotenv').config();
 
 
-app.get('/', (req, res) => res.send('Hello world!'));
+//Serve static files (index.html) from from build folder
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 
-app.listen(process.env.PORT, (req, res) => {
-  console.log(`Drivel server listening on port: ${process.env.PORT}`)
+//Test-request
+app.get('/hey', (req, res) => res.status(777).send('HO!'));
+
+app.listen(process.env.PORT, (req, res) => { // eslint-disable-line no-unused-vars
+  console.log(`Drivel server listening on port: ${process.env.PORT}`);
 });
+
