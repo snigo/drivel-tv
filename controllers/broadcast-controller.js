@@ -13,7 +13,7 @@ exports.createBroadcast = async (req, res) => {
 
     // Destruct client request data
     const { title, description, tags, owner, isReversed, youtubePlaylists} = req.body;
-    // Run client data through our YouTube API helper function
+    // Run client data through our YouTube API helper function and return relevant data
     const { broadcastId, thumbnailUrl, youtubePlaylistIds, videoArray, currentVideo, currentVideoLength, currentVideoTime, nextVideo, nextVideoLength } = await convertPlaylist(isReversed, youtubePlaylists);
 
     //Store broadcast in DB using Mongoose
@@ -37,7 +37,7 @@ exports.createBroadcast = async (req, res) => {
 
     // Start timer that keeps track of current broadcast timestamp
     ////////////////
-    let currentTime = 0; //Set initial video timestamp to 0
+    let currentTime = 0; // Set initial video timestamp to 0
     // If broadcast id does not exist, start broadcast - else, throw error
     if (!schedule.scheduledJobs[broadcastId]) {
       schedule.scheduleJob(broadcastId, '* * * * * *', function () {
