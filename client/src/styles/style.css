@@ -1,0 +1,61 @@
+
+
+.navbar {
+  position: fixed;
+  top: 0px;
+  width: 100vw;
+  height: 5vh;
+  background-color: red;
+}
+
+.homepage {
+  margin-top: 5vh;
+  background-color: grey;
+}
+
+.broadcast {
+  margin-top: 5vh;
+  height: 95vh;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(168, 168, 168);
+}
+
+.videoplayer {
+  width: 80vw;
+  background-color: rgb(104, 88, 192);
+}
+
+.chat {
+  width: 20vw;
+  background-color: rgb(110, 160, 132);
+}
+
+/* #chatList {
+
+} */
+
+#chatForm {
+  position: fixed;
+  bottom: 0;
+}
+
+/* #chatInput {
+
+}
+
+#chatButton {
+
+} */
+
+@media (max-width: 600px){
+
+  .videoplayer {
+    width: 100vw;
+  }
+
+  .chat {
+    width: 100vw;
+  }
+
+}
