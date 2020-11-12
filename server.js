@@ -6,6 +6,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const path = require('path');
 const router = require('./router');
+const mongoose = require('mongoose');
 
 // Call io module with io instance
 require('./socket/broadcast-socket')(io);
@@ -27,8 +28,18 @@ app.get('*', function (req, res) {
 });
 
 
-// Listen for new requests
-http.listen(process.env.PORT, (req, res) => { // eslint-disable-line no-unused-vars
-  console.log(`Drivel server listening on port: ${process.env.PORT}`);
+// Connect to MongoDB and listen for new requests
+http.listen(process.env.PORT, async (req, res) => { // eslint-disable-line no-unused-vars
+  try {
+    await mongoose.connect(process.env.MONGO_DB, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    });
+    console.log(`Drivel server connected to DB - listening on port: ${process.env.PORT}`);
+  } catch (error) {
+    console.log('Could not connect to database', error);  // eslint-disable-line no-console
+  }
 });
+
 
