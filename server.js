@@ -35,6 +35,7 @@ http.listen(process.env.PORT, async (req, res) => { // eslint-disable-line no-un
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
+      useCreateIndex: true,
     });
     console.log(`Drivel server connected to DB - listening on port: ${process.env.PORT}`);
   } catch (error) {

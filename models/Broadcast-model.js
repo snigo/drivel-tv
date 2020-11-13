@@ -5,7 +5,7 @@ const { Schema } = require('mongoose');
 
 // Create new Broadcast schema
 const BroadcastModel = new Schema({
-  broadcastId: { type: String, required: true },
+  broadcastId: { type: String, required: true, unique: true},
   title: { type: String, required: true },
   description: String,
   tags: String,
@@ -15,8 +15,8 @@ const BroadcastModel = new Schema({
   youtubePlaylists: { type: Array, required: true },
   videoArray: { type: Array, required: true },
   currentVideo: { type: String, required: true },
-  currentVideoLength: { type: Number, required: true },
-  currentVideoTime: { type: Number, required: true },
+  currentVideoLength: { type: String, required: true },
+  currentTime: { type: Number, required: true },
   nextVideo: { type: String, required: true },
   nextVideoLength: { type: String, required: true },
 });

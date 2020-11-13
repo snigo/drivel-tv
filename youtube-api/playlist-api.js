@@ -3,6 +3,10 @@
 const fetch = require('node-fetch');
 const url = require('url');
 const querystring = require('querystring');
+const {nanoid} = require('nanoid');
+const {storeVideosToDb} = require('../youtube-api/video-api');
+
+
 
 
 // Function that processes playlists using YouTube API
@@ -39,18 +43,26 @@ exports.convertPlaylist = async (isReversed, youtubePlaylists) => {
   if ( isReversed === true ) flattenedVideoArray.reverse();
 
 
+  //TO DO - Do all videos exist in DB?
+  //TO DO - use API to split and store
+
+  // Store all YouTube videos in DB
+  await storeVideosToDb(flattenedVideoArray);
+
+  // Crate new unique broadcast id
+  const id = nanoid();
+
+  // Save relevant data in broadcast object
   const broadcast = {
-    broadcastId: 'xyz123',
+    broadcastId: id,
     thumbnailUrl: 'https://i3.ytimg.com/vi/erLk59H86ww/hqdefault.jpg',
     youtubePlaylistIds: youtubePlaylists,
     videoArray: flattenedVideoArray,
     currentVideo: flattenedVideoArray[0],
-    currentVideoLength: 10,
-    currentVideoTime: 0,
     nextVideo: flattenedVideoArray[1],
-    nextVideoLength: 15
   };
 
+  // Return broadcast object
   return broadcast;
 
 };
