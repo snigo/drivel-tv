@@ -3,6 +3,9 @@
 const router = require('express').Router();
 const broadcastController = require('./controllers/broadcast-controller');
 
+
+// Route to get broadcast page (by client POSTing id to identify broadcast)
+router.post('/api/get-broadcast', broadcastController.getBroadcast);
 // Route to create a new broadcast
 router.post('/api/create-broadcast', broadcastController.createBroadcast);
 // Route to delete a broadcast

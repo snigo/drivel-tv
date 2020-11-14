@@ -1,7 +1,7 @@
 
 import '../styles/style.css';
 
-function Homepage() {
+function Homepage () {
 
   return (
     <div className="homepage">

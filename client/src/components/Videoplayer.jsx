@@ -3,14 +3,15 @@ import '../styles/style.css';
 import YouTube from 'react-youtube';
 
 
-function Videoplayer(props) {
+function Videoplayer (props) {
 
-  const [time, setTime] = useState(0);
+  const [broadcast, setBroadcast] = useState({});
 
-  // When current timestamp comes in from props, set it as state
+  // Set broadcast object as state
   useEffect ( () => {
-    setTime(props.currentTime)
-  }, [props.currentTime]);
+    setBroadcast(props.broadcast);
+  }, [props.broadcast]);
+
 
   //Define YouTube player options and assign start time from state
   const opts = {
@@ -21,12 +22,12 @@ function Videoplayer(props) {
       'playsinline': 1,
       'webkit-playsinline': 1,
       'autoplay': 1,
-      'start': time,
+      'start': broadcast.currentTime,
     },
   }
 
   return (
-    <YouTube containerClassName={'videoplayer'} videoId='oOBJ-sIw4W8' opts={opts} />
+    <YouTube containerClassName={'videoplayer'} videoId={broadcast.currentVideo} opts={opts} />
   )
 }
 

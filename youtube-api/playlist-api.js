@@ -8,7 +8,6 @@ const {storeVideosToDb} = require('../youtube-api/video-api');
 
 
 
-
 // Function that processes playlists using YouTube API
 exports.convertPlaylist = async (isReversed, youtubePlaylists) => {
 
@@ -43,8 +42,9 @@ exports.convertPlaylist = async (isReversed, youtubePlaylists) => {
   if ( isReversed === true ) flattenedVideoArray.reverse();
 
 
-  //TO DO - Do all videos exist in DB?
-  //TO DO - use API to split and store
+
+
+
 
   // Store all YouTube videos in DB
   await storeVideosToDb(flattenedVideoArray);

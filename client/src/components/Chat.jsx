@@ -4,7 +4,7 @@ import '../styles/style.css';
 import $ from 'jquery';
 
 
-function Chat(props) {
+function Chat (props) {
 
   const [msg, setMsg] = useState('');
 
@@ -20,7 +20,6 @@ function Chat(props) {
       <form id="chatForm" action="" onSubmit={ (e) => {
         e.preventDefault(); // Prevent page reloading
         if(msg === '') return; // Do not emit message if input is empty
-        console.log('props', props);
         props.emitMsg(msg); // Call emit function in Broadcast component
         setMsg(''); // Clear input box
       }}>

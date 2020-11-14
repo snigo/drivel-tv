@@ -7,18 +7,21 @@ import io from 'socket.io-client';
 let socket;
 
 
-function Broadcast() {
+function Broadcast (props) {
 
   const [msg, setMsg] = useState('');
-  const [currentTime, setCurrentTime] = useState(0);
-
+  const [broadcast, setBroadcast] = useState({});
 
   useEffect ( () => {
     //Connect to room-specific socket
     socket = io.connect();
     socket.emit('join', window.location.pathname);
-    //Get current timestamp for this room
-    socket.emit('get current time', {room: window.location.pathname});
+
+    // Listens for new chat messages from server
+    socket.on('chat message to client', msg => {
+      setMsg(msg);
+    });
+
     // On component unmount, close socket
     return () => {
       socket.close();
@@ -27,25 +30,25 @@ function Broadcast() {
 
 
   useEffect ( () => {
-    //Store incoming time update in state
-    socket.on('current time', time => {
-      setCurrentTime(time);
-    });
-    // Listens for new chat messages from server
-    socket.on('chat message to client', msg => {
-      setMsg(msg);
-    });
-  }, []);
+    //Get broadcast object for this room from backend server
+    props.getBroadcast(window.location.pathname.slice(3));
+  }, [props]);
+
+  useEffect ( () => {
+    // Store broadcast object as state when getting response from backend server
+    setBroadcast(props.broadcast);
+  }, [props.broadcast]);
 
 
-  // Sends new messages (from Chat) to server
+
+  // Sends new message (from groupchat) to server
   const emitMsg = (msg) => {
     socket.emit('chat message to server', {room: window.location.pathname, msg: msg});
   };
 
   return (
     <div className="broadcast">
-      <Videoplayer currentTime={currentTime}/>
+      <Videoplayer broadcast={broadcast}/>
       <Chat emitMsg={emitMsg} msg={msg}/>
     </div>
   )

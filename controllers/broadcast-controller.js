@@ -15,6 +15,23 @@ momentDurationFormatSetup(moment);
 const {convertPlaylist} = require('../youtube-api/playlist-api');
 const {findVideo} = require('../youtube-api/find-api');
 
+
+// Get broadcast object - send to client
+exports.getBroadcast = async (req, res) => {
+
+  // Get broadcast id from request
+  const broadId = req.body.broadcastId;
+
+  // Find broadcast object and send back to client
+  Broadcast.findOne({broadcastId: broadId}, (err, broadcast) => {
+    if (broadcast === null) res.status(404).send('404'); // If not found, send 404
+    else {
+      res.status(200).json(broadcast); // Else if found, send broadcast obj back
+    }
+
+  });
+};
+
 // Create broadcast function
 exports.createBroadcast = async (req, res) => {
 

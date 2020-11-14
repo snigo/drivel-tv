@@ -1,11 +1,4 @@
 
-//TEST TIMER
-let time = 0;
-setInterval(() => {
-  time++;
-}, 1000);
-
-
 module.exports = (io) => {
 
   //When a user connects to a broadcast room
@@ -16,12 +9,6 @@ module.exports = (io) => {
     socket.on('join', (room) => {
       socket.join(room);
       console.log(socket.id, 'joined', room);
-    });
-
-    //Send current timestamp of broadcast to user
-    socket.on('get current time', (data) => {
-      console.log('Use to get correct timer - Room:', data.room);
-      socket.emit('current time', time);
     });
 
     //Send all chat messages back to all users in room
