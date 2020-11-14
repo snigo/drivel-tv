@@ -48,6 +48,12 @@
 
 } */
 
+
+.broadcastFormContainer {
+  margin-top: 7vh;
+  margin-left: 2vw;
+}
+
 @media (max-width: 600px){
 
   .videoplayer {

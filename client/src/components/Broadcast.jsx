@@ -17,6 +17,9 @@ function Broadcast (props) {
     socket = io.connect();
     socket.emit('join', window.location.pathname);
 
+    //Get broadcast object for this room from backend server
+    props.getBroadcast(window.location.pathname.slice(3));
+
     // Listens for new chat messages from server
     socket.on('chat message to client', msg => {
       setMsg(msg);
@@ -30,15 +33,9 @@ function Broadcast (props) {
 
 
   useEffect ( () => {
-    //Get broadcast object for this room from backend server
-    props.getBroadcast(window.location.pathname.slice(3));
-  }, [props]);
-
-  useEffect ( () => {
     // Store broadcast object as state when getting response from backend server
     setBroadcast(props.broadcast);
   }, [props.broadcast]);
-
 
 
   // Sends new message (from groupchat) to server

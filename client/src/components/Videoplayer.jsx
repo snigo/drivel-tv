@@ -12,6 +12,10 @@ function Videoplayer (props) {
     setBroadcast(props.broadcast);
   }, [props.broadcast]);
 
+  // Function to reload page / get new video at end of current video
+  const reload = (event) => {
+    if (event.data === 0) window.location.reload();
+  };
 
   //Define YouTube player options and assign start time from state
   const opts = {
@@ -27,7 +31,7 @@ function Videoplayer (props) {
   }
 
   return (
-    <YouTube containerClassName={'videoplayer'} videoId={broadcast.currentVideo} opts={opts} />
+    <YouTube containerClassName={'videoplayer'} onStateChange={reload} videoId={broadcast.currentVideo} opts={opts} />
   )
 }
 

@@ -19,6 +19,6 @@ const BroadcastModel = new Schema({
   currentTime: { type: Number, required: true },
   nextVideo: { type: String, required: true },
   nextVideoLength: { type: String, required: true },
-});
+}, { timestamps: true }); // Set automatic timestamp for every document
 
 module.exports = mongoose.model('Broadcast', BroadcastModel);

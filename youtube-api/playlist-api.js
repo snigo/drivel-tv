@@ -30,7 +30,12 @@ exports.convertPlaylist = async (isReversed, youtubePlaylists) => {
     return playlistVideoArray;
   };
 
-  let playlistVideoArray = await getVidIds(youtubePlaylists);
+  // Convert playlist string to array of playlists and remove whitespaces
+  let escapedyoutubePlaylists = youtubePlaylists.replace(/\s/g, '').split(',');
+
+  // Get video array
+  let playlistVideoArray = await getVidIds(escapedyoutubePlaylists);
+
   // Flatten the array of arrays, generating a complete list of video ids
   const flattenedVideoArray = [].concat(...playlistVideoArray);
 
@@ -56,7 +61,7 @@ exports.convertPlaylist = async (isReversed, youtubePlaylists) => {
   const broadcast = {
     broadcastId: id,
     thumbnailUrl: 'https://i3.ytimg.com/vi/erLk59H86ww/hqdefault.jpg',
-    youtubePlaylistIds: youtubePlaylists,
+    youtubePlaylistIds: escapedyoutubePlaylists,
     videoArray: flattenedVideoArray,
     currentVideo: flattenedVideoArray[0],
     nextVideo: flattenedVideoArray[1],
