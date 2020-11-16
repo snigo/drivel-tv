@@ -10,19 +10,25 @@ let socket;
 function Broadcast (props) {
 
   const [msg, setMsg] = useState('');
+  const [allMessages, setAllMessages] = useState('');
   const [broadcast, setBroadcast] = useState({});
 
   useEffect ( () => {
-    //Connect to room-specific socket
+    //Connect to room-specific socket and get all chat
     socket = io.connect();
     socket.emit('join', window.location.pathname);
 
     //Get broadcast object for this room from backend server
     props.getBroadcast(window.location.pathname.slice(3));
 
+     // Listens for array of previouse room messages
+     socket.on('all chat messages to client', messages => {
+      setAllMessages(messages);
+    });
+
     // Listens for new chat messages from server
-    socket.on('chat message to client', msg => {
-      setMsg(msg);
+    socket.on('chat message to client', data => {
+      setMsg(data);
     });
 
     // On component unmount, close socket
@@ -40,13 +46,13 @@ function Broadcast (props) {
 
   // Sends new message (from groupchat) to server
   const emitMsg = (msg) => {
-    socket.emit('chat message to server', {room: window.location.pathname, msg: msg});
+    socket.emit('chat message to server', { sender: 'Guest', msg: msg, room: window.location.pathname});
   };
 
   return (
     <div className="broadcast">
       <Videoplayer broadcast={broadcast}/>
-      <Chat emitMsg={emitMsg} msg={msg}/>
+      <Chat emitMsg={emitMsg} data={msg} allMessages={allMessages}/>
     </div>
   )
 }

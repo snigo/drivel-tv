@@ -8,19 +8,31 @@ import logOut from '../assets/log-out.svg';
 import search from '../assets/search.svg';
 import guest from '../assets/guest_profile_picture.png';
 
+import { useHistory } from "react-router-dom";
+
 /* Using react-burger-menu plugin for menu functionality */
 import { slide as Menu } from 'react-burger-menu';
 import '../styles/hamburger-style.css';
 
 function Navbar () {
 
+  // Import useHistory for redirect functionality
+  const history = useHistory();
+
   const reload = () => {
     window.location.reload();
   };
 
+  // Redirects user to homepage
+  const sendToHome = () => {
+    history.push('/');
+  };
+
   return (
     <header>
-        <p className="logo-text">Drivel.TV</p>
+        <div onClick={sendToHome}>
+          <p className="logo-text">Drivel.TV</p>
+        </div>
 
         <div className="search">
           <form className="search-form">

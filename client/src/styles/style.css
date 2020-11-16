@@ -8,6 +8,10 @@
   padding: 0;
 }
 
+html {
+  background-color: rgb(245, 245, 245);
+}
+
 /* Header */
 
 header {
@@ -119,7 +123,6 @@ header {
   /* Homepage & broadcast tiles */
 
   .homepage {
-    background-color: rgb(245, 245, 245);
     /* To evenly space broadcast tiles */
     display: flex;
     flex-wrap: wrap;
@@ -176,22 +179,33 @@ header {
     height: 95vh;
     display: flex;
     flex-wrap: wrap;
-    background-color: rgb(168, 168, 168);
   }
 
     .videoplayer {
       width: 80vw;
-      background-color: rgb(104, 88, 192);
     }
 
     .chat {
       width: 20vw;
-      background-color: rgb(110, 160, 132);
+      padding: 0.7%;
     }
 
-      /* #chatList {
+      #chatList {
+        font-size: 0.9rem;
+        font-weight: 500;
+        line-height: 150%;
+        word-wrap: break-word;
+        list-style-type: none;
+      }
 
-      } */
+      .guest {
+        font-weight: 600;
+      }
+
+      .user {
+        font-weight: 600;
+        color: red;
+      }
 
       #chatForm {
         position: fixed;

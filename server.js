@@ -39,7 +39,7 @@ http.listen(process.env.PORT, async (req, res) => { // eslint-disable-line no-un
       useCreateIndex: true,
     });
     // Function that finds all broadcasts in DB and start their timers
-    //await startAllCron();
+    await startAllCron();
     console.log(`Drivel server connected to DB - listening on port: ${process.env.PORT}`);
   } catch (error) {
     console.log('Could not connect to database', error);  // eslint-disable-line no-console

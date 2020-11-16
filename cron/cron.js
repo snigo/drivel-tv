@@ -18,17 +18,18 @@ exports.startCron = (broadcastId) => {
 
   // If broadcast id does not exist, start broadcast - else, throw error
   if (!schedule.scheduledJobs[broadcastId]) {
+
     schedule.scheduleJob(broadcastId, '* * * * * *', function () {
 
       Broadcast.findOne({broadcastId: broadcastId}, async (err, broadcast) => {
         if (err) throw new Error ('Could not find broadcast in DB!', err);
 
-        // Convert YouTube timestamp to seconds
-        const length = Number(moment.duration(broadcast.currentVideoLength).format('ss'));
+        // Convert YouTube timestamp to seconds (and remove commas produced by moment plugin)
+        const length = Number(moment.duration(broadcast.currentVideoLength).format('ss').replace(/,/g, ''));
 
         // If current timestamp is less than video duration, increment with 1 second
         if (broadcast.currentTime < length) {
-          console.log('++', broadcast.broadcastId);
+          //console.log('++', broadcast.broadcastId); // Server-log to verify if broadcast timers are on
           broadcast.currentTime = ++broadcast.currentTime; // Increment timestamp by 1
           broadcast.save(); // Save to DB
         } else {

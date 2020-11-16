@@ -11,6 +11,9 @@ const {storeVideosToDb} = require('../youtube-api/video-api');
 // Function that processes playlists using YouTube API
 exports.convertPlaylist = async (isReversed, youtubePlaylists) => {
 
+  // Variable to save playlist thumbnail url
+  let imageUrl;
+
   // Get all YouTube video ids from playlists
   const getVidIds = async (playlists) => {
     // Return array of video ids from each playlist URL
@@ -23,6 +26,14 @@ exports.convertPlaylist = async (isReversed, youtubePlaylists) => {
       const array = await youtubeJSON.items.map( video => {
         return video.snippet.resourceId.videoId;
       });
+
+      // Save first video thumbnail as playlist thumbnail
+      // If thumnail resolution does not exist, use the next avalible size
+      if (youtubeJSON.items[0].snippet.thumbnails.maxres) imageUrl = youtubeJSON.items[0].snippet.thumbnails.maxres.url;
+      else if (youtubeJSON.items[0].snippet.thumbnails.standard) imageUrl = youtubeJSON.items[0].snippet.thumbnails.standard.url;
+      else if (youtubeJSON.items[0].snippet.thumbnails.high) imageUrl = youtubeJSON.items[0].snippet.thumbnails.high.url;
+      else imageUrl = 'No thumbnail';
+
       // Return array of ids
       return array;
     }));
@@ -60,7 +71,7 @@ exports.convertPlaylist = async (isReversed, youtubePlaylists) => {
   // Save relevant data in broadcast object
   const broadcast = {
     broadcastId: id,
-    thumbnailUrl: 'https://i3.ytimg.com/vi/erLk59H86ww/hqdefault.jpg',
+    thumbnailUrl: imageUrl,
     youtubePlaylistIds: escapedyoutubePlaylists,
     videoArray: flattenedVideoArray,
     currentVideo: flattenedVideoArray[0],
