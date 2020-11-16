@@ -12,20 +12,29 @@ const schedule = require('node-schedule');
 
 
 
-// Get broadcast object - send to client
+// Get all broadcast objects
+exports.getAllBroadcast = async (req, res) => {
+
+  // Find all broadcast objects and send back to client
+  Broadcast.find({}, (err, broadcasts) => {
+    if (broadcasts === null) res.status(404).send('404'); // If not found, send 404
+    else res.status(200).json(broadcasts); // Else if found, send broadcast obj back
+  });
+
+};
+
+// Get broadcast object
 exports.getBroadcast = async (req, res) => {
 
   // Get broadcast id from request
   const broadId = req.body.broadcastId;
 
-  // Find broadcast object and send back to client
+  // Find specific broadcast object and send back to client
   Broadcast.findOne({broadcastId: broadId}, (err, broadcast) => {
     if (broadcast === null) res.status(404).send('404'); // If not found, send 404
-    else {
-      res.status(200).json(broadcast); // Else if found, send broadcast obj back
-    }
-
+    else res.status(200).json(broadcast); // Else if found, send broadcast obj back
   });
+
 };
 
 // Create broadcast function
@@ -66,6 +75,8 @@ exports.createBroadcast = async (req, res) => {
 
     // Start CRON timer (update broadcast every second)
     startCron(broadcastId);
+
+    // Send broadcast back to client
     res.status(200).json(broadcastObj);
 
 
@@ -89,7 +100,7 @@ exports.deleteBroadcast = async (req, res) => {
     if (schedule.scheduledJobs[broadcastId]) {
       let currentBroadcast = schedule.scheduledJobs[broadcastId];
       currentBroadcast.cancel();
-      res.status(200);
+      res.status(200).send(broadcastId);
     } else {
       throw new Error ('Broadcast id does not exist');
     }

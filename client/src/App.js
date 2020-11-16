@@ -1,6 +1,7 @@
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useState } from 'react';
 import './App.css';
+import './styles/style.css';
 
 import Navbar from './components/Navbar';
 import Homepage from './components/Homepage';
@@ -15,14 +16,16 @@ function App() {
 
   const [broadcast, setBroadcast] = useState({});
   const [broadcastUrl, setBroadcastUrl] = useState('/b/:broadcast');
+  const [allBroadcastObjects, setAllBroadcastObjects] = useState([]);
 
 
   return (
     <Router>
       <Navbar/>
+      <div className="content">
       <Switch>
         <Route exact path='/'> {/* If user visits root, redict to homepage */}
-          <Homepage/>
+          <Homepage allBroadcasts={allBroadcastObjects} getAllBroadcasts={getAllBroadcasts}/>
         </Route>
         <Route exact path="/create-broadcast">
           <Broadcastform/>
@@ -40,9 +43,25 @@ function App() {
           <FourOFour/>
         </Route>
       </Switch>
+      </div>
     </Router>
   )
 
+
+
+ // Function to get all broadcasts from backend server
+ async function getAllBroadcasts () {
+  // Call backend API
+  try {
+    const response = await fetch('/api/get-all-broadcasts');
+    if (response.ok) { // If response is ok (200 range)
+      const allBroadcastObjects = await response.json(); // Parse JSON response
+      setAllBroadcastObjects(allBroadcastObjects); // Set array of broadcast objects as state
+    } else { setBroadcastUrl('/404');}; // Else if no broadcasts, send user to 404
+  } catch (err) {
+    console.log(err);
+  }
+ };
 
 
   // Function to get broadcast from backend server
@@ -60,11 +79,13 @@ function App() {
       if (response.ok) { // If response is ok (200 range)
         const broadcastObj = await response.json(); // Parse JSON response
         setBroadcast(broadcastObj); // Set broadcast object as state
-      } else { setBroadcastUrl('/');}; // Else if broadcast does not exist in DB, send user to 404
+      } else { setBroadcastUrl('/404');}; // Else if broadcast does not exist in DB, send user to 404
     } catch (err) {
       console.log(err);
     }
   };
+
+
 
 
 

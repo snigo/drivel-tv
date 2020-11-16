@@ -1,67 +1,223 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-.navbar {
+* {
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header */
+
+header {
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 3%;
+  background-color: rgb(255, 0, 51);
+
+  /* Make it a flex-item */
+  display: flex;
+
+  /* Make header fixed */
   position: fixed;
-  top: 0px;
+  top: 0;
   width: 100vw;
   height: 5vh;
-  background-color: red;
 }
 
-.homepage {
+  .logo-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+  }
+
+  .search {
+    display: inline-block;
+    width: 60%
+  }
+
+    .search-form {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+    }
+
+      .search-input {
+        width: 30%;
+        border: 1px solid white;
+        border-radius: 4px;
+        background-color: rgb(255, 0, 51);
+        padding: 0.5em 0 0.5em 0;
+        transition: width 0.4s ease-in-out;
+        padding: 5px;
+
+        font-size: 12px;
+        color: white;
+      }
+
+        .search-input:focus {
+          width: 90%;
+          outline-width: 0;
+        }
+
+        .search-button {
+          display: inline-block;
+          justify-content: center;
+          color: white;
+          border: 1px solid white;
+          border-radius: 4px;
+          background-color: rgb(255, 0, 51);
+          margin-left: 10px;
+          padding: 0.36em;
+        }
+
+          .search-icon {
+            width: 1em;
+            height: 0.9em;
+          }
+
+        ::-webkit-input-placeholder { /* Edge */
+          color: white;
+        }
+
+        ::placeholder {
+          color: white;
+        }
+
+
+  .menu-container {
+      display: flex;
+    }
+
+    .live-button {
+      display: inline-block;
+      justify-content: center;
+      color: white;
+      border: 1px solid white;
+      border-radius: 4px;
+      background-color: rgb(255, 0, 51);
+      margin-right: 20px;
+      padding: 0.36em;
+    }
+
+    .profile-icon {
+      display: inline-block;
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 50%;
+    }
+
+
+
+/* Container w/ all content */
+
+.content {
   margin-top: 5vh;
-  background-color: grey;
 }
 
-.broadcast {
-  margin-top: 5vh;
-  height: 95vh;
-  display: flex;
-  flex-wrap: wrap;
-  background-color: rgb(168, 168, 168);
-}
+  /* Homepage & broadcast tiles */
 
-.videoplayer {
-  width: 80vw;
-  background-color: rgb(104, 88, 192);
-}
+  .homepage {
+    background-color: rgb(245, 245, 245);
+    /* To evenly space broadcast tiles */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 2%;
+  }
 
-.chat {
-  width: 20vw;
-  background-color: rgb(110, 160, 132);
-}
+    .broadcast-tile {
+      width: 32%;
+      padding-bottom: 6%;
+      margin-bottom: 2%;
+    }
 
-/* #chatList {
+      .broadcast-thumb {
+        width: 100%;
+        height: 100%;
+        padding-top: 56.25%;
+      }
 
-} */
+    .broadcast-details {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 3%;
+    }
 
-#chatForm {
-  position: fixed;
-  bottom: 0;
-}
+      .broadcast-profilepic img {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+      }
 
-/* #chatInput {
+      .broadcast-title-owner {
+        margin-left: 3%;
+      }
 
-}
-
-#chatButton {
-
-} */
+      .broadcast-link {
+        display: block;
+      }
 
 
-.broadcastFormContainer {
-  margin-top: 7vh;
-  margin-left: 2vw;
-}
+
+
+
+
+
+/* Broadcast page */
+
+  .broadcastFormContainer {
+    margin-top: 7vh;
+    margin-left: 2vw;
+  }
+
+  .broadcast {
+    height: 95vh;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(168, 168, 168);
+  }
+
+    .videoplayer {
+      width: 80vw;
+      background-color: rgb(104, 88, 192);
+    }
+
+    .chat {
+      width: 20vw;
+      background-color: rgb(110, 160, 132);
+    }
+
+      /* #chatList {
+
+      } */
+
+      #chatForm {
+        position: fixed;
+        bottom: 0;
+      }
+
+      /* #chatInput {
+
+      }
+
+      #chatButton {
+
+      } */
+
+
 
 @media (max-width: 600px){
 
-  .videoplayer {
-    width: 100vw;
-  }
+    .videoplayer {
+      width: 100vw;
+    }
 
-  .chat {
-    width: 100vw;
-  }
+    .chat {
+      width: 100vw;
+    }
 
 }
+
+

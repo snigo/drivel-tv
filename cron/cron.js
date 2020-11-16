@@ -15,6 +15,7 @@ momentDurationFormatSetup(moment);
 // Start timer that updates broadcast every second
 exports.startCron = (broadcastId) => {
 
+
   // If broadcast id does not exist, start broadcast - else, throw error
   if (!schedule.scheduledJobs[broadcastId]) {
     schedule.scheduleJob(broadcastId, '* * * * * *', function () {
