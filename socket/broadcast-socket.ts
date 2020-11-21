@@ -1,28 +1,24 @@
+import { Server, Socket } from 'socket.io';
+import { Message } from '../models/message.model';
 
-// Import models
-const Message = require('../models/Message-model');
-
-module.exports = (io) => {
+export const broadcastSocket = (io: Server) => {
 
   //When a user connects to a broadcast room
-  io.on('connection', (socket) => { // eslint-disable-line no-unused-vars
+  io.on('connection', (socket: Socket) => {
     //console.log('a user connected');
 
     //Join room
-    socket.on('join', async (room) => {
+    socket.on('join', async (room: string) => {
       socket.join(room);
-      console.log(socket.id, 'joined', room);
 
       // Get all chat messages from specific room
-      const messages = await Message.find({room: room});
+      const messages = await Message.find({ room: room });
       // Send all messages to the user who requested them
       socket.emit('all chat messages to client', messages);
     });
 
-
-
     //Send all chat messages back to all users in room and store in DB
-    socket.on('chat message to server', (data) => {
+    socket.on('chat message to server', (data: Message) => {
       // Send message back to all clients in room
       io.to(data.room).emit('chat message to client', data);
       //Store broadcast data in object
@@ -36,9 +32,7 @@ module.exports = (io) => {
     });
 
     socket.on('disconnect', () => {
-      //console.log('a user disconnected');
+      console.log('user has been disconnected');
     });
-
   });
-
 };

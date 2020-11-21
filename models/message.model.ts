@@ -1,13 +1,16 @@
+import { model, Schema } from 'mongoose';
 
-// Require mongoose
-const mongoose = require('mongoose');
-const { Schema } = require('mongoose');
+export interface Message {
+  sender: string;
+  msg: string;
+  room: string;
+}
 
 // Create new Message schema
-const MessageModel = new Schema({
+const messageSchema = new Schema({
   sender: { type: String, required: true },
   msg: { type: String, required: true },
   room: { type: String, required: true },
 }, { timestamps: true }); // Set automatic timestamp for every document
 
-module.exports = mongoose.model('Message', MessageModel);
+export const Message = model('Message', messageSchema);
