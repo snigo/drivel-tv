@@ -9,7 +9,7 @@ import { startAllCron } from './cron/cron-startup';
 import { broadcastSocket } from './socket/broadcast-socket';
 
 dotenv.config();
-const { MONGO_DB } = process.env;
+const { MONGO_DB, PORT } = process.env;
 
 const app = express();
 const http = new HttpServer(app);
@@ -32,8 +32,9 @@ app.get('*', function (_, res) {
     });
     broadcastSocket(io);
     await startAllCron();
-    console.log(`Drivel server connected to DB - listening on port: ${process.env.PORT}`);
-    app.listen(process.env.PORT);
+    app.listen(PORT, () => {
+      console.log(`Drivel server connected to DB and listening on port: ${PORT}`);
+    });
   } catch (error) {
     console.log('Could not connect to database', error);
   }
